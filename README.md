@@ -8,15 +8,15 @@ Please note - the dataset and resultant model should be considered highly experi
 
 The dataset in alpaca format can be found on huggingface [andyburgin/kubefix](https://huggingface.co/datasets/andyburgin/kubefix)
 
-The quantised 4 bit model in GGUF format can  be found on huggingface [andyburgin/Phi-3-mini-4k-instruct-kubefix-v0.1-gguf](https://huggingface.co/andyburgin/Phi-3-mini-4k-instruct-kubefix-v0.1-gguf)
+The quantised 4 bit model in GGUF format can be found on huggingface [andyburgin/Phi-3-mini-4k-instruct-kubefix-v0.1-gguf](https://huggingface.co/andyburgin/Phi-3-mini-4k-instruct-kubefix-v0.1-gguf)
 
-Reminder - the data set and resultant model should be considered highly experimental and used with caution, use at your own risk.
+Reminder - the dataset and resultant model should be considered highly experimental and used with caution, use at your own risk.
 
 ## The Aims
 
 This repo was primarily a learning exercise to test if finetuning a model is a worthwhile exercise compared to using just the base model, or in conjunction with a RAG based approach.
 
-The dataset is generated from a subset of the Kubernetes documentation from the [English markdown files](https://github.com/kubernetes/website/tree/main/content/en/docs). Several Q&A pairs for the documents would be generated from the documents using an opensource model (to avoid licencing issues for some free models or SaasS services) - after much trial and error the [openchat-3.5-0106](https://huggingface.co/TheBloke/openchat-3.5-0106-GGUF) model was found to be the least problematic.
+The dataset is generated from a subset of the Kubernetes documentation from the [English markdown files](https://github.com/kubernetes/website/tree/main/content/en/docs). The Q&A pairs have been generated from the documents using an opensource model (to avoid licencing issues for some free models or SaasS services) - after much trial and error the [openchat-3.5-0106](https://huggingface.co/TheBloke/openchat-3.5-0106-GGUF) model was found to be the least problematic.
 
 Ultimately the resulting LLM is intended to be self-hosted in a GPU free environment running under [local-ai](https://localai.io/basics/kubernetes/) in Kubernetes, therefore a small parameter model were needed, initial tests with TinyLamma proved less than useful so the [microsoft/Phi-3-mini-4k-instruct-gguf](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf) model was chosen as a base image - fortunately this was available as a base image for training with [unsloth](https://unsloth.ai/introducing)
 

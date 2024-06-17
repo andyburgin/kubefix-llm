@@ -184,6 +184,71 @@ At the time of writing there's a known issue with the Phi3 model and saving to q
 
 Download the file model.q4_k_m.gguf, rename it Phi-3-mini-4k-instruct-kubefix-v0.1.q4_k_m.gguf and upload to huggingface.
 
+# Results
+
+## The Narrative
+
+Many tests could be done against the model, but I decided the best approach to evaluate if the tuned model was performing well was to spli tests over 3 areas:
+
+* General kubernetes knowledge
+* K8sGPT example output passed to LLM API
+* Look at recently introduced/replaced functionality
+
+These tests could be carried out across several opensource models and proprietary APIs, each response scored and compared.
+
+## The Method
+
+Each test is to be run against llamacpp (as this will probably be powering any in cluster solution), all models will be up to 4GB in size - up to 7 Billion parameter Quantised to 4 bit - clearly some commercial offerings from OpenAI will use their API and black box implementation.
+
+The test questions are:
+* how do you restart a kubernetes pod ? - I'm looking for no hallucinations, no made up commands, extra points for understanding the parent controllers like replicasets"
+* Simplify the following Kubernetes error message... - this is the output from [K8sGPT](https://k8sgpt.ai/) that would be passed to a LLM/API for analysis.
+* What are Kubernetes Pod Security Standards ? - Want to hear it's deprecated in Kubernetes v1.21 and removed in 1.25
+* How do I implement Kubernetes Pod Security Standards ? - Want to hear about the Pod Security Admission and related namespace labels.
+* What is kubernetes pod security admission? - Want to hear it's an admission controller that implements PSS"
+
+## Example
+
+```
+./main -m ./models/Phi-3-mini-4k-instruct-kubefix-v0.1.q4_k_m.gguf --temp 0 --repeat_penalty 1.0 --color  --prompt '<|user|>\
+how do you restart a kubernetes pod ? <|end|>\
+```
+Note that the temperature value is set to 0, this should help ensure that we get unembellished output from the model.
+
+
+## The results
+
+The output and question analysis can be found on [this google sheet](https://docs.google.com/spreadsheets/d/1Q12tkVIuA7ndtttStledfRqasje0xWYr_mLq5l7JOuQ/edit?usp=sharing)
+
+| Model | Score |
+| --- | --- |
+| gpt-4 | 8|
+| gpt-4o | 7|
+| Meta-Llama-3-8B-Instruct-Q4_K_M.gguf | 5|
+| openchat-3.5-0106.Q4_K_M.gguf | 5|
+| mistral-7b-instruct-v0.3.Q4_K_M.gguf | 4|
+| Phi-3-mini-4k-instruct-kubefix-v0.1.q4_k_m.gguf | 3|
+| kube-7b-v0.1-Q4_K_M.gguf | 3|
+| mistral-7b-instruct-v0.2.Q4_K_M.gguf | 3|
+| mistral-7b-instruct-v0.1.Q4_K_M.gguf | 3|
+| ChatGPT 3.5 | 2|
+| Phi-3-mini-4k-instruct-q4.gguf | 1|
+| llama-2-7b-chat.Q4_K_M.gguf | 1|
+| tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf | 1|
+| stable-code-3b-q4_k_m.gguf | 0|
+
+## Analysis
+
+Not surprisingly the OpenAI models did much better than the opensource ones. But it was clear that when generating output for new features some models showed their training data was out of date. For the models that were up to date, there seemed to be a tendency for them to generate output about the new features mixed with older deprecated features. This is likely that their training dataset includes historical information about those features.
+
+Sadly many of these issues affected the Phi-3-mini-4k-instruct-kubefix-v0.1 model, overall the model score was disappointing, but there was a marked improvement on the base Phi-3-mini-4k-instruct base model. There is therefore some cause for optimism for improvements if more quality training data can be sourced.
+
+Looking specifically at the models for [K8sGPT](https://k8sgpt.ai/) there was only really gpt4 that provided coherent and useful output to the second question. Many of the models provided generic debugging and seemed to suggest some heavy-handed techniques missing the nuance that just "turning it off and on again" isn't the answer to everything.
+
+I could see users of [K8sGPT](https://k8sgpt.ai/) feeling somewhat underwhelmed by the responses they received from the LLMs - but this could indicate a need for a better prompt to help the model generate improved output. 
+
+It's still early days for the [K8sGPT](https://k8sgpt.ai/) project.
+
 # Still TODO
 
-There's a whole bunch of testing and evaluation to do with the dataset and model, but there's the initial release for evaluation.
+There's still a whole bunch of testing and evaluation to do with the dataset and model, but there's the initial release for evaluation.

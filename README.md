@@ -188,7 +188,7 @@ Download the file model.q4_k_m.gguf, rename it Phi-3-mini-4k-instruct-kubefix-v0
 
 ## The Narrative
 
-Many tests could be done against the model, but I decided the best approach to evaluate if the tuned model was performing well was to spli tests over 3 areas:
+Many tests could be done against the model, but I decided the best approach to evaluate if the tuned model was performing well was to split tests over 3 areas:
 
 * General kubernetes knowledge
 * K8sGPT example output passed to LLM API
@@ -198,7 +198,7 @@ These tests could be carried out across several opensource models and proprietar
 
 ## The Method
 
-Each test is to be run against llamacpp (as this will probably be powering any in cluster solution), all models will be up to 4GB in size - up to 7 Billion parameter Quantised to 4 bit - clearly some commercial offerings from OpenAI will use their API and black box implementation.
+Each test is to be run against llamacpp (as this will probably be powering any in cluster solution), all models will be up to 4GB in size - up to 7 Billion parameter Quantised to 4 bit - clearly some commercial offerings from OpenAI will use their API and blackbox implementation.
 
 The test questions are:
 * how do you restart a kubernetes pod ? - I'm looking for no hallucinations, no made up commands, extra points for understanding the parent controllers like replicasets"
@@ -227,7 +227,7 @@ The output and question analysis can be found on [this google sheet](https://doc
 | Meta-Llama-3-8B-Instruct-Q4_K_M.gguf | 5|
 | openchat-3.5-0106.Q4_K_M.gguf | 5|
 | mistral-7b-instruct-v0.3.Q4_K_M.gguf | 4|
-| Phi-3-mini-4k-instruct-kubefix-v0.1.q4_k_m.gguf | 3|
+| **Phi-3-mini-4k-instruct-kubefix-v0.1.q4_k_m.gguf** | 3|
 | kube-7b-v0.1-Q4_K_M.gguf | 3|
 | mistral-7b-instruct-v0.2.Q4_K_M.gguf | 3|
 | mistral-7b-instruct-v0.1.Q4_K_M.gguf | 3|
@@ -239,9 +239,9 @@ The output and question analysis can be found on [this google sheet](https://doc
 
 ## Analysis
 
-Not surprisingly the OpenAI models did much better than the opensource ones. But it was clear that when generating output for new features some models showed their training data was out of date. For the models that were up to date, there seemed to be a tendency for them to generate output about the new features mixed with older deprecated features. This is likely that their training dataset includes historical information about those features.
+Not surprisingly the OpenAI models did much better than the opensource ones. It was clear output relating to newer kubernetes features some models showed their training data was out of date. For the models that were up to date, there seemed to be a tendency for them to generate output about the new features mixed with older deprecated features. Indicating their training dataset still includes historical information about those features.
 
-Sadly many of these issues affected the Phi-3-mini-4k-instruct-kubefix-v0.1 model, overall the model score was disappointing, but there was a marked improvement on the base Phi-3-mini-4k-instruct base model. There is therefore some cause for optimism for improvements if more quality training data can be sourced.
+Sadly many of these issues affected the **Phi-3-mini-4k-instruct-kubefix-v0.1** model, overall the model score was disappointing, but there was a marked improvement on the Phi-3-mini-4k-instruct base model. There is therefore some cause for optimism for improvements if more quality training data can be sourced.
 
 Looking specifically at the models for [K8sGPT](https://k8sgpt.ai/) there was only really gpt4 that provided coherent and useful output to the second question. Many of the models provided generic debugging and seemed to suggest some heavy-handed techniques missing the nuance that just "turning it off and on again" isn't the answer to everything.
 

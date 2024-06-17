@@ -157,7 +157,7 @@ dataset = load_dataset("andyburgin/kubefix", split = "train")
 The notebook is set to `max_steps = 60,` remove that and replace with `num_train_epochs=1`
 
 ### Change 3 - Test Prompts
-There are a few tests that use `fibonnaci sequence`, change these to `How do I` and ` `restart a Kubernetes pod`
+There are a few tests that use `fibonnaci sequence`, change these to `How do I` and `restart a Kubernetes pod`
 
 ### Change 4 - Merge
 We are just interested in the final model so make sure you `load the LoRA adapters` by changing the `False` to `True` in that step.
@@ -250,5 +250,4 @@ I could see users of [K8sGPT](https://k8sgpt.ai/) feeling somewhat underwhelmed 
 It's still early days for the [K8sGPT](https://k8sgpt.ai/) project.
 
 # Still TODO
-
 There's still a whole bunch of testing and evaluation to do with the dataset and model, but there's the initial release for evaluation.

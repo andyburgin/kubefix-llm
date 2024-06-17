@@ -203,7 +203,7 @@ Each test is to be run against llamacpp (as this will probably be powering any i
 The test questions are:
 * how do you restart a kubernetes pod ? - I'm looking for no hallucinations, no made up commands, extra points for understanding the parent controllers like replicasets"
 * Simplify the following Kubernetes error message... - this is the output from [K8sGPT](https://k8sgpt.ai/) that would be passed to a LLM/API for analysis.
-* What are Kubernetes Pod Security Standards ? - Want to hear it's deprecated in Kubernetes v1.21 and removed in 1.25
+* What are Kubernetes Pod Security Standards ? - Don't want to hear about PSP as deprecated in Kubernetes v1.21 removed in 1.25
 * How do I implement Kubernetes Pod Security Standards ? - Want to hear about the Pod Security Admission and related namespace labels.
 * What is kubernetes pod security admission? - Want to hear it's an admission controller that implements PSS"
 
@@ -226,6 +226,7 @@ The output and question analysis can be found on [this google sheet](https://doc
 | gpt-4o | 7|
 | Meta-Llama-3-8B-Instruct-Q4_K_M.gguf | 5|
 | openchat-3.5-0106.Q4_K_M.gguf | 5|
+| qwen2-7b-instruct-q4_k_m.gguf | 4 |
 | mistral-7b-instruct-v0.3.Q4_K_M.gguf | 4|
 | **Phi-3-mini-4k-instruct-kubefix-v0.1.q4_k_m.gguf** | 3|
 | kube-7b-v0.1-Q4_K_M.gguf | 3|
